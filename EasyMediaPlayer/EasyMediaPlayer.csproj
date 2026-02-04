@@ -1,0 +1,83 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<LangVersion>latest</LangVersion>
+		<TargetFrameworks>netstandard2.0;net462;net10.0-windows</TargetFrameworks>
+		<Version>0.0.0.0</Version>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<RootNamespace>EasyMediaPlayer</RootNamespace>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<NoWarn></NoWarn>
+		<Authors>JavaCommons</Authors>
+		<Company>JavaCommons Technologies</Company>
+		<Product>EasyMediaPlayer</Product>
+		<Description>EasyMediaPlayer Library</Description>
+		<Copyright>Copyright © JavaCommons Technologies 2024</Copyright>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<Title>EasyMediaPlayer Library</Title>
+		<PackageId>EasyMediaPlayer</PackageId>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/nuget-pkg/EasyMediaPlayer</PackageProjectUrl>
+		<UseWindowsForms>true</UseWindowsForms>
+		<!--
+		<PackageTags>json;parser</PackageTags>
+		-->
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<PackageReadmeFile>.\README.md</PackageReadmeFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+		<UseWindowsForms>true</UseWindowsForms>
+	</PropertyGroup>
+	<PropertyGroup>
+		<DebugType>full</DebugType>
+	</PropertyGroup>
+	<PropertyGroup>
+		<!--needef for project using xunit-->
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+	<ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+		<Reference Include="Microsoft.CSharp" />
+		<Reference Include="System" />
+		<Reference Include="System.Core" />
+		<Reference Include="System.Data" />
+		<Reference Include="System.Data.DataSetExtensions" />
+		<Reference Include="System.IO.Compression" />
+		<Reference Include="System.Linq" />
+		<Reference Include="System.Net.Http" />
+		<Reference Include="System.Web" />
+		<Reference Include="System.Xml" />
+		<Reference Include="System.Xml.Linq" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include=".\README.md" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<RuntimeIdentifiers>win</RuntimeIdentifiers>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<COMReference Include="WMPLib">
+			<WrapperTool>tlbimp</WrapperTool>
+			<VersionMinor>0</VersionMinor>
+			<VersionMajor>1</VersionMajor>
+			<Guid>6bf52a50-394a-11d3-b153-00c04f79faa6</Guid>
+			<Lcid>0</Lcid>
+			<Isolated>false</Isolated>
+			<EmbedInteropTypes>true</EmbedInteropTypes>
+		</COMReference>
+		<COMReference Include="AxWMPLib">
+			<WrapperTool>aximp</WrapperTool>
+			<VersionMinor>0</VersionMinor>
+			<VersionMajor>1</VersionMajor>
+			<Guid>6bf52a50-394a-11d3-b153-00c04f79faa6</Guid>
+			<Lcid>0</Lcid>
+			<Isolated>false</Isolated>
+		</COMReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
+	</ItemGroup>
+</Project>
