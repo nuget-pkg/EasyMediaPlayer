@@ -13,6 +13,6 @@ static class Program
     static void Main(string[] args)
     {
         Echo(new { args = args });
-        Echo(EasyMediaPlayer.Add2(11, 22));
+        //Echo(EasyMediaPlayer.Add2(11, 22));
    }
 }

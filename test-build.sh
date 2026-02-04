@@ -14,12 +14,13 @@ find . -name bin -exec rm -rf {} +
 find . -name obj -exec rm -rf {} +
 
 cd $cwd
-dotnet test -p:Configuration=Release -p:Platform="Any CPU" EasyMediaPlayer.sln
+#dotnet test -p:Configuration=Release -p:Platform="Any CPU" EasyMediaPlayer.sln
 
 cd $cwd/EasyMediaPlayer
 #sed -i -e "s/<Version>.*<\/Version>/<Version>${version}<\/Version>/g" EasyMediaPlayer.csproj
-rm -rf *.nupkg
-dotnet pack -o . -p:Configuration=Release -p:Platform="Any CPU" EasyMediaPlayer.csproj
+rm -rf bin obj *.nupkg
+msbuild.exe -restore -verbosity:quiet EasyMediaPlayer.csproj
+msbuild.exe -t:Pack -p:Configuration=Release -verbosity:quiet EasyMediaPlayer.csproj
 
 exit 0
 
