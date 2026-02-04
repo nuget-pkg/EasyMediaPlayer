@@ -6,7 +6,6 @@
     {
         public EasyMediaPlayer()
         {
-            //SetWMPVolume(100);
         }
         public bool HandleDialogKey(System.Windows.Forms.Keys keyData)
         {
@@ -55,8 +54,6 @@
             {
                 this.Ctlcontrols.currentPosition = value;
             }
-            //if (this.playState == WMPLib.WMPPlayState.wmppsPaused || this.playState == WMPLib.WMPPlayState.wmppsStopped)
-            //    this.Ctlcontrols.play();
         }
         void OnKeyDownRight()
         {
@@ -69,11 +66,8 @@
             {
                 this.Ctlcontrols.currentPosition = value;
             }
-            //if (this.playState == WMPLib.WMPPlayState.wmppsPaused || this.playState == WMPLib.WMPPlayState.wmppsStopped)
-            //    this.Ctlcontrols.play();
         }
-        // メニュー項目クリック時の処理例
-        public void SetWMPVolume(int volume)
+        public void SetVolume(int volume)
         {
             // Ensure volume is within the valid range (0 to 100)
             if (volume >= 0 && volume <= 100)
