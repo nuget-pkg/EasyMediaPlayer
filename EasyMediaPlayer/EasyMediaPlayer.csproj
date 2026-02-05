@@ -80,4 +80,8 @@
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="EasyObject" Version="2026.205.625.35" />
+	</ItemGroup>
 </Project>

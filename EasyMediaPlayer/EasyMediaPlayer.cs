@@ -1,7 +1,115 @@
 ﻿namespace Global
 {
+    using Global;
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Windows.Forms;
+    using WMPLib;
+    using static Global.EasyObject;
+    public class EasyMediaControl: Panel
+    {
+        protected Form parent;
+        protected EasyMediaPlayer MediaPlayer;
+
+        public EasyMediaControl(Form parent, int volume = 100)
+        {
+            this.parent = parent;
+            this.MediaPlayer = new EasyMediaPlayer();
+            this.Controls.Add(this.MediaPlayer);
+            this.MediaPlayer.Dock = DockStyle.Fill;
+            this.parent.Load += (s, e) =>
+            {
+                var timer = new System.Threading.Timer((state) =>
+                {
+                    this.Invoke((MethodInvoker)(() => {
+                        MediaPlayer.SetVolume(volume);
+                    }));
+                    ((System.Threading.Timer)state!).Dispose();
+                });
+                timer.Change(TimeSpan.FromMilliseconds(50), TimeSpan.Zero);
+            };
+        }
+        public bool HandleDialogKey(System.Windows.Forms.Keys keyData)
+        {
+            return this.MediaPlayer.HandleDialogKey(keyData);
+        }
+        public void SetVolume(int volume)
+        {
+            this.MediaPlayer.SetVolume(volume);
+        }
+        public void Play()
+        {
+            this.MediaPlayer.Ctlcontrols.play();
+        }
+        public EasyObject Info
+        {
+            get
+            {
+                return FromObject(new { a = "" });
+            }
+        }
+        public EasyObject currentMedia
+        {
+            get
+            {
+                int duration = 0;
+                try
+                {
+                    duration = (int)this.MediaPlayer.currentMedia.duration;
+                }
+                catch (Exception)
+                {
+                    ;
+                }
+                return FromObject(
+                    new
+                    {
+                        duration
+                    });
+            }
+        }
+        public int currentPosition
+        {
+            get
+            {
+                return (int)this.MediaPlayer.Ctlcontrols.currentPosition;
+            }
+        }
+        [DefaultValue(null)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public string URL
+        {
+            get
+            {
+                return this.MediaPlayer.URL;
+            }
+            set
+            {
+                this.MediaPlayer.URL = value;
+            }
+        }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public string[] PlayList1
+        {
+            get
+            {
+                return [];
+            }
+            set
+            {
+                IWMPPlaylist playList = MediaPlayer.playlistCollection.newPlaylist("Anonymous PlayList");
+                foreach (string file in value)
+                {
+                    IWMPMedia mediaItem = MediaPlayer.newMedia(file);
+                    playList.appendItem(mediaItem);
+                }
+                MediaPlayer.currentPlaylist = playList;
+            }
+        }
+    }
+
+
     public class EasyMediaPlayer : AxWMPLib.AxWindowsMediaPlayer
     {
         public EasyMediaPlayer()
@@ -77,7 +185,8 @@
             else
             {
                 // Handle invalid input if necessary
-                Console.WriteLine("Volume must be between 0 and 100.");
+                //Console.WriteLine("Volume must be between 0 and 100.");
+                throw new ArgumentException("Volume must be between 0 and 100.");
             }
         }
     }
