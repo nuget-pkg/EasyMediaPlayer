@@ -12,7 +12,11 @@
         protected Form parent;
         protected EasyMediaPlayer MediaPlayer;
 
-        public EasyMediaControl(Form parent, int volume = 100)
+        public EasyMediaControl(
+            Form parent,
+            bool autoStart = false,
+            int volume = 100
+            )
         {
             this.parent = parent;
             this.MediaPlayer = new EasyMediaPlayer();
@@ -23,7 +27,8 @@
                 var timer = new System.Threading.Timer((state) =>
                 {
                     this.Invoke((MethodInvoker)(() => {
-                        MediaPlayer.SetVolume(volume);
+                        MediaPlayer.AutoStart = autoStart;
+                        MediaPlayer.Volume = volume;
                     }));
                     ((System.Threading.Timer)state!).Dispose();
                 });
@@ -34,22 +39,31 @@
         {
             return this.MediaPlayer.HandleDialogKey(keyData);
         }
-        public void SetVolume(int volume)
-        {
-            this.MediaPlayer.SetVolume(volume);
-        }
-        public void Play()
-        {
-            this.MediaPlayer.Ctlcontrols.play();
-        }
-        public EasyObject Info
-        {
-            get
-            {
-                return FromObject(new { a = "" });
-            }
-        }
-        public EasyObject currentMedia
+        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        //public int Volume
+        //{
+        //    set
+        //    {
+        //        this.MediaPlayer.Volume = value;
+        //    }
+        //}
+        //public void Play()
+        //{
+        //    this.MediaPlayer.Ctlcontrols.play();
+        //}
+        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        //public bool AutoStart
+        //{
+        //    get
+        //    {
+        //        return this.MediaPlayer.AutoStart;
+        //    }
+        //    set
+        //    {
+        //        this.MediaPlayer.AutoStart = value;
+        //    }
+        //}
+        public EasyObject CurrentMedia
         {
             get
             {
@@ -79,7 +93,7 @@
                     });
             }
         }
-        public int currentPosition
+        public int CurrentPosition
         {
             get
             {
@@ -116,6 +130,10 @@
                 }
                 MediaPlayer.currentPlaylist = playList;
             }
+        }
+        public void Play()
+        {
+            this.MediaPlayer.Ctlcontrols.play();
         }
     }
 
@@ -185,18 +203,31 @@
                 this.Ctlcontrols.currentPosition = value;
             }
         }
-        public void SetVolume(int volume)
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public bool AutoStart
         {
-            // Ensure volume is within the valid range (0 to 100)
-            if (volume >= 0 && volume <= 100)
+            get
             {
-                this.settings.volume = volume;
+                return this.settings.autoStart;
             }
-            else
+            set
             {
-                // Handle invalid input if necessary
-                //Console.WriteLine("Volume must be between 0 and 100.");
-                throw new ArgumentException("Volume must be between 0 and 100.");
+                this.settings.autoStart = value;
+            }
+        }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public int Volume
+        {
+            set
+            {
+                if (value >= 0 && value <= 100)
+                {
+                    this.settings.volume = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Volume must be between 0 and 100.");
+                }
             }
         }
     }
