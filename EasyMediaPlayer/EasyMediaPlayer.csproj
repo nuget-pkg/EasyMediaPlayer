@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<LangVersion>latest</LangVersion>
 		<TargetFrameworks>net462;net10.0-windows</TargetFrameworks>
-		<Version>2026.0205.1843.06</Version>
+		<Version>2026.0205.2004.01</Version>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<RootNamespace>EasyMediaPlayer</RootNamespace>
@@ -82,6 +82,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="EasyObject" Version="2026.205.625.35" />
+	  <PackageReference Include="EasyObject" Version="2026.205.1936.13" />
 	</ItemGroup>
 </Project>

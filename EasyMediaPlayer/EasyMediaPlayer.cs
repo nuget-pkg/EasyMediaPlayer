@@ -10,7 +10,7 @@
     public class EasyMediaControl: Panel
     {
         protected Form parent;
-        protected EasyMediaPlayer MediaPlayer;
+        public EasyMediaPlayer MediaPlayer;
 
         public EasyMediaControl(
             Form parent,
@@ -39,30 +39,6 @@
         {
             return this.MediaPlayer.HandleDialogKey(keyData);
         }
-        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        //public int Volume
-        //{
-        //    set
-        //    {
-        //        this.MediaPlayer.Volume = value;
-        //    }
-        //}
-        //public void Play()
-        //{
-        //    this.MediaPlayer.Ctlcontrols.play();
-        //}
-        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        //public bool AutoStart
-        //{
-        //    get
-        //    {
-        //        return this.MediaPlayer.AutoStart;
-        //    }
-        //    set
-        //    {
-        //        this.MediaPlayer.AutoStart = value;
-        //    }
-        //}
         public EasyObject CurrentMedia
         {
             get
@@ -172,9 +148,12 @@
                 int curPosition = (int)this.Ctlcontrols.currentPosition;
                 TimeSpan span1 = new TimeSpan(0, 0, duration);
                 TimeSpan span2 = new TimeSpan(0, 0, curPosition);
-                string str = String.Format(
-                    "ファイルパス：{0}\n長さ：{1}\n現在位置：{2}",
-                    sourceURL, span1.ToString(), span2.ToString());
+                string str = String.Format($"""
+                    File Path: {sourceURL}
+                    Diratopm: {span1.ToString()}
+                    Current Position: {span2.ToString()}
+                    
+                    """);
                 Clipboard.SetText(str);
             }
         }
