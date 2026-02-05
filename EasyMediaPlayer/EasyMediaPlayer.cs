@@ -53,6 +53,15 @@
         {
             get
             {
+                string? sourceURL = null;
+                try
+                {
+                    sourceURL = this.MediaPlayer.currentMedia.sourceURL;
+                }
+                catch (Exception)
+                {
+                    ;
+                }
                 int duration = 0;
                 try
                 {
@@ -65,6 +74,7 @@
                 return FromObject(
                     new
                     {
+                        sourceURL,
                         duration
                     });
             }
